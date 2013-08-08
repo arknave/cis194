@@ -1,4 +1,3 @@
-import Data.List.Split
 toDigits :: Integer -> [Integer]
 toDigits n
   | n <= 0    = []
