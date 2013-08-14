@@ -6,10 +6,7 @@ skips :: [a] -> [[a]]
 skips l = map (q l) [0..(length l - 1)]
 
 q :: [a] -> Int -> [a]
-q [] _ = []
-q l x
-  | length l <= x = []
-  | otherwise = (l !! x): q (drop (x+1) l) x
+q l x = if length l <= x then [] else (l !! x): q (drop (x+1) l) x
 
 localMaxima :: [Integer] -> [Integer]
 localMaxima n = map p $ filter l $ zip3 n (tail n) $ tail $ tail n
@@ -26,8 +23,9 @@ histogram l = draw (map (count l) [0..9]) ++ "==========\n0123456789\n"
 draw :: [Integer] -> String
 draw l
   | m == 0 = ""
-  | otherwise = map (\x->if x==m then '*' else ' ') l ++ "\n" ++ (draw $ map (\x-> if x==m then m-1 else x) l)
+  | otherwise = map p l ++ "\n" ++ (draw $ map (\x-> if x==m then m-1 else x) l)
   where
+    p x = if x==m then '*' else ' '
     m = maximum l
 
 count :: [Integer] -> Integer -> Integer
