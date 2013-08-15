@@ -2,14 +2,28 @@ module Golf where
 
 import Data.List
 
+m :: (a -> b) -> [a] -> [b]
+m = map
+
+e :: a -> a -> Bool
+e = (==)
+
+t :: Boolean
+t = True
+
 skips :: [a] -> [[a]]
-skips l = map (q l) [0..(length l - 1)]
+skips l = m (q l) [0..(length l - 1)]
 
 q :: [a] -> Int -> [a]
-q l x = if length l <= x then [] else (l !! x): q (drop (x+1) l) x
+q l x
+  | length l <= x = [] 
+  | t = (l !! x): q (drop (x+1) l) x
 
 localMaxima :: [Integer] -> [Integer]
-localMaxima n = map p $ filter l $ zip3 n (tail n) $ tail $ tail n
+localMaxima n = m p $ filter l $ zip3 n (i n) $ i $ i n
+
+i :: [Integer] -> [Integer]
+i = tail
 
 p :: (Integer, Integer, Integer) -> Integer
 p (a,b,c) = b
@@ -18,18 +32,27 @@ l :: (Integer, Integer, Integer) -> Bool
 l (a,b,c) = (b > a) && (b > c) 
 
 histogram :: [Integer] -> String
-histogram l = draw (map (count l) [0..9]) ++ "==========\n0123456789\n"
+histogram l = d (m (count l) [0..9]) ++ "==========\n0123456789\n"
 
-draw :: [Integer] -> String
-draw l
-  | m == 0 = ""
-  | otherwise = map p l ++ "\n" ++ (draw $ map (\x-> if x==m then m-1 else x) l)
+d :: [Integer] -> String
+d l
+  | e a 0 = ""
+  | t = map p l ++ "\n" ++ (d $ m (e a) l)
   where
-    p x = if x==m then '*' else ' '
-    m = maximum l
+    p x  
+      | e x a = '*' 
+      | t = ' '
+    a = maximum l
+
+n :: Integer -> Integer -> Integer
+n a x
+  | e x a = a-1 
+  | t = x
 
 count :: [Integer] -> Integer -> Integer
-count [] _ = 0
-count (y:ys) x
-  | x==y = (+1) $ count ys x
-  | otherwise = count ys x
+count l e = foldl (y e) l
+
+y :: Integer -> Integer -> Bool
+y z u
+  | e z u = 1
+  | t = 0
