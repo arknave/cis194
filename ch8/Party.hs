@@ -20,8 +20,8 @@ moreFun a b = case (compare a b) of
                 _  -> b
 
 treeFold :: (a -> b -> b) -> b -> Tree a -> b
-treeFold f i (Node { rootLabel = r, subForest = []}) = f r i
-treeFold f i (Node { rootLabel = r, subForest = s})= f r (foldr (flip $ treeFold f) i s)
+treeFold f i (Node { rootLabel = r, subForest = [] }) = f r i
+treeFold f i (Node { rootLabel = r, subForest = s })= f r (foldr (flip $ treeFold f) i s)
 
 nextLevel :: Employee -> [(GuestList, GuestList)] -> (GuestList, GuestList)
 nextLevel e l  = (bestWithBoss, bestNoBoss)
