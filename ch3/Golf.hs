@@ -32,7 +32,7 @@ l :: (Integer, Integer, Integer) -> Bool
 l (a,b,c) = (b > a) && (b > c) 
 
 histogram :: [Integer] -> String
-histogram l = d (m (count l) [0..9]) ++ "==========\n0123456789\n"
+histogram l = d (m (c l) [0..9]) ++ "==========\n0123456789\n"
 
 d :: [Integer] -> String
 d l
@@ -46,13 +46,11 @@ d l
 
 n :: Integer -> Integer -> Integer
 n a x
-  | e x a = a-1 
+  | e x a = a - 1 
   | t = x
 
-count :: [Integer] -> Integer -> Integer
-count [] _ = 0
-count (y:ys) x
-    | x == y = (+1) $ r
-    | t = r
-    where
-      r = count ys x
+c :: [Integer] -> Integer -> Integer
+c [] _ = 0
+c (y:ys) x
+    | x == y = (+1) $ c ys x
+    | t = c ys x
