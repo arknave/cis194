@@ -2,7 +2,7 @@ import Data.List.Split
 
 valid :: String -> Bool
 valid "" = False
-valid s = not $ foldr (\a b -> b || a `elem` ["::", "import", "->", "module" ]) False $ words s
+valid s = not $ foldr (\a b -> b || a `elem` ["--", "::", "import", "->", "module" ]) False $ words s
 
 count :: String -> Int
 count s = if valid s then length . concat $ words s else 0
