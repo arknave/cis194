@@ -5,10 +5,10 @@ import Data.List
 m :: (a -> b) -> [a] -> [b]
 m = map
 
-e :: a -> a -> Bool
+e :: (Eq a) => a -> a -> Bool
 e = (==)
 
-t :: Boolean
+t :: Bool
 t = True
 
 skips :: [a] -> [[a]]
@@ -37,7 +37,7 @@ histogram l = d (m (count l) [0..9]) ++ "==========\n0123456789\n"
 d :: [Integer] -> String
 d l
   | e a 0 = ""
-  | t = map p l ++ "\n" ++ (d $ m (e a) l)
+  | t = map p l ++ "\n" ++ (d $ m (n a) l)
   where
     p x  
       | e x a = '*' 
@@ -50,9 +50,9 @@ n a x
   | t = x
 
 count :: [Integer] -> Integer -> Integer
-count l e = foldl (y e) l
-
-y :: Integer -> Integer -> Bool
-y z u
-  | e z u = 1
-  | t = 0
+count [] _ = 0
+count (y:ys) x
+    | x == y = (+1) $ r
+    | t = r
+    where
+      r = count ys x
